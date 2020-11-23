@@ -1,11 +1,13 @@
-import '../stylesheets/Note.css'
+import "../stylesheets/Note.css";
 
 function Note(props) {
-    return(
-        <div className='note'>
-            <h1>{props.description}</h1>
-        </div>
-    )
+  console.log(props)
+  return (
+    <div className="note">
+      <p>{props.dateTime}</p>
+      <h1>{props.description}</h1>
+    </div>
+  );
 }
 
 export default Note;
