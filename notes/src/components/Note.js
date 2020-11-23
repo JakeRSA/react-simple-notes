@@ -1,6 +1,10 @@
+import '../stylesheets/Note.css'
+
 function Note(props) {
     return(
-    <h1>{props.description}</h1>
+        <div className='note'>
+            <h1>{props.description}</h1>
+        </div>
     )
 }
 

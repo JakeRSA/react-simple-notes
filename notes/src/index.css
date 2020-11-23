@@ -2,5 +2,18 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-color: red;
+}
+
+.app-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  display: inline;
 }

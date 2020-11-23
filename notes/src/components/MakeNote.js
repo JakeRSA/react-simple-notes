@@ -1,5 +1,6 @@
 import React from 'react';
 import Note from './Note';
+import '../stylesheets/MakeNote.css';
 
 class NewNote extends React.Component {
 
@@ -34,12 +35,14 @@ class NewNote extends React.Component {
             <Note key={note.count} dateTime={this.state.dateTime} description={note.description}/>
         )
         return (
-            <div>
-                <textarea onChange={event => this.onDescriptionChange(event)}></textarea>
-                <button onClick={() => {this.addNote(this.state.description)}}>
-                    add
-                </button>
-                <div>{noteElems}</div>
+            <div className="app-wrapper">
+                <div className='make-note'>
+                    <textarea onChange={event => this.onDescriptionChange(event)}></textarea>
+                    <button onClick={() => {this.addNote(this.state.description)}}>
+                        add
+                    </button>
+                </div>
+                <div className='note-container'>{noteElems}</div>
             </div>
         )
     }
