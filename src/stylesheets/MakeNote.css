@@ -6,15 +6,23 @@
 
 .make-note textarea {
   display: block;
-  min-height: 8rem;
   width: 100%;
   max-width: 100%;
   resize: none;
-  padding: 0;
-  margin: 0;
+  box-sizing: border-box;
+  padding: 4px;
   border: 1px solid green;
   color: green;
   caret-color: #00ff00;
+}
+
+.titleTextArea {
+  height: 2em;
+  margin-bottom: 1em !important;
+}
+
+.descriptionTextArea {
+  height: 8rem;
 }
 
 .make-note textarea:focus {

@@ -1,19 +1,27 @@
 .note {
-  /* padding: 1em; */
   margin: 1em;
   border: 2px outset #00ff00;
-  /* box-shadow: 1px 1px 5px 1px rgb(0, 255, 0); */
   height: 8em;
   width: 16em;
   overflow: hidden;
 }
 
 .note h2 {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 5px;
   border-bottom: 1px dashed #00ff00;
   font-size: smaller;
   display: inline;
+}
+
+.note h1 {
+  margin: 5px;
+  display: block;
+  font-size: medium;
+}
+
+.note p {
+  margin: 5px;
+  font-size: 0.8em;
 }
 
 .note button {
@@ -24,10 +32,6 @@
 
 .note button:focus {
   outline: none;
-}
-
-.note p {
-  font-size: 0.8em;
 }
 
 .deleted {

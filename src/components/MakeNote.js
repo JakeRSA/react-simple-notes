@@ -7,6 +7,7 @@ class MakeNote extends React.Component {
     super(props);
     this.notes = [];
     this.state = {
+      title: "",
       description: "",
       count: 1,
     };
@@ -17,10 +18,16 @@ class MakeNote extends React.Component {
     this.setState({ description: value });
   }
 
-  addNote(description) {
+  onTitleChange(event) {
+    const value = event.target.value;
+    this.setState({ title: value });
+  }
+
+  addNote() {
     const dateTime = new Date();
     const note = {
       dateTime: dateTime,
+      title: this.state.title,
       description: this.state.description,
       count: this.state.count,
     };
@@ -36,24 +43,39 @@ class MakeNote extends React.Component {
       <Note
         key={note.count}
         dateTime={note.dateTime}
+        title={note.title}
         description={note.description}
       />
     ));
     return (
       <div className="app-wrapper">
-        <div className="make-note">
+        <form className="make-note">
           <textarea
+            className="titleTextArea"
+            placeholder="Title (if you want but no big deal)"
+            value={this.state.title}
+            onChange={(event) => this.onTitleChange(event)}
+          ></textarea>
+          <textarea
+            className="descriptionTextArea"
+            placeholder="Enter note body here..."
             value={this.state.description}
             onChange={(event) => this.onDescriptionChange(event)}
           ></textarea>
           <button
-            onClick={() => {
-              this.addNote(this.state.description);
+            onClick={(e) => {
+              e.preventDefault();
+              if (this.state.description) this.addNote();
+              else {
+                window.alert(
+                  "You can't make an empty note. Why would you even want to do that?"
+                );
+              }
             }}
           >
             add
           </button>
-        </div>
+        </form>
         <div className="note-container">{noteElems}</div>
       </div>
     );

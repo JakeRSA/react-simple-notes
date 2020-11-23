@@ -49,6 +49,8 @@ class Note extends React.Component {
           >
             del
           </button>
+          <h1>{this.props.title && this.props.title}</h1>
+          <h1>{!this.props.title && "<no title>"}</h1>
           <p>{this.props.description}</p>
         </div>
       );
