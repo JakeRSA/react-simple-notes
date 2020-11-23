@@ -2,7 +2,7 @@ import React from "react";
 import Note from "./Note";
 import "../stylesheets/MakeNote.css";
 
-class NewNote extends React.Component {
+class MakeNote extends React.Component {
   constructor(props) {
     super(props);
     this.notes = [];
@@ -18,30 +18,34 @@ class NewNote extends React.Component {
   }
 
   addNote(description) {
-
     const dateTime = new Date();
     const note = {
-      dateTime: dateTime.toISOString(),
+      dateTime: dateTime,
       description: this.state.description,
       count: this.state.count,
     };
     console.log(note.dateTime);
     this.notes.push(note);
-    this.setState({ count: this.state.count + 1 });
+    this.setState({
+      count: this.state.count + 1,
+      description: "",
+    });
   }
 
   render() {
-    const noteElems = this.notes.map((note) => (
-      <Note
-        key={note.count}
-        dateTime={note.dateTime}
-        description={note.description}
-      />
-    ));
+    const noteElems = this.notes
+      .map((note) => (
+        <Note
+          key={note.count}
+          dateTime={note.dateTime}
+          description={note.description}
+        />
+      ));
     return (
       <div className="app-wrapper">
         <div className="make-note">
           <textarea
+            value={this.state.description}
             onChange={(event) => this.onDescriptionChange(event)}
           ></textarea>
           <button
@@ -58,4 +62,4 @@ class NewNote extends React.Component {
   }
 }
 
-export default NewNote;
+export default MakeNote;

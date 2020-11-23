@@ -4,3 +4,7 @@
   padding: 1em;
   margin: 1em;
 }
+
+.deleted {
+  display: none;
+}
