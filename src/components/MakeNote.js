@@ -24,7 +24,6 @@ class MakeNote extends React.Component {
       description: this.state.description,
       count: this.state.count,
     };
-    console.log(note.dateTime);
     this.notes.push(note);
     this.setState({
       count: this.state.count + 1,
@@ -33,14 +32,13 @@ class MakeNote extends React.Component {
   }
 
   render() {
-    const noteElems = this.notes
-      .map((note) => (
-        <Note
-          key={note.count}
-          dateTime={note.dateTime}
-          description={note.description}
-        />
-      ));
+    const noteElems = this.notes.map((note) => (
+      <Note
+        key={note.count}
+        dateTime={note.dateTime}
+        description={note.description}
+      />
+    ));
     return (
       <div className="app-wrapper">
         <div className="make-note">

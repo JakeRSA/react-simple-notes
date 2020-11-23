@@ -1,8 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400&display=swap");
+
+html * {
+  background-color: black;
+}
+
 .container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.container * {
+  color: #00ff00;
+  font-family: "Source Code Pro", monospace;
 }
 
 .app-wrapper {

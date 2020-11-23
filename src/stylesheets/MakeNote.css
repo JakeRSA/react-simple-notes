@@ -1,6 +1,5 @@
 .make-note {
-  border: 2px solid gray;
-  border-radius: 10px;
+  border: 2px outset #00ff00;
   padding: 1em;
   width: 40%;
 }
@@ -13,6 +12,14 @@
   resize: none;
   padding: 0;
   margin: 0;
+  border: 1px solid green;
+  color: green;
+  caret-color: #00ff00;
+}
+
+.make-note textarea:focus {
+  color: #00ff00;
+  outline: 2px solid #00ff00;
 }
 
 .make-note button {
@@ -20,8 +27,14 @@
   float: right;
 }
 
+.make-note button:focus {
+  outline: none;
+}
+
 .note-container {
-width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  width: 100%;
+  margin-top: 1em;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-evenly;
 }

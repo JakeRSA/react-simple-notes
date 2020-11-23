@@ -1,13 +1,12 @@
 import "../stylesheets/Note.css";
-import React from 'react';
+import React from "react";
 
 class Note extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      deleted: false
-    }
+      deleted: false,
+    };
     const dt = props.dateTime;
 
     const yyyy = dt.getFullYear();
@@ -34,23 +33,26 @@ class Note extends React.Component {
       "Are you sure you want to delete this note?"
     );
     if (userResponse) {
-      this.setState({deleted:true})
+      this.setState({ deleted: true });
     }
-  };
+  }
 
   render() {
     if (!this.state.deleted) {
       return (
         <div className="note">
-          <p>{this.dateFormatted}</p>
-          <button onClick={() => {this.deleteNote();}}>
+          <h2>{this.dateFormatted}</h2>
+          <button
+            onClick={() => {
+              this.deleteNote();
+            }}
+          >
             del
           </button>
-          <h1>{this.props.description}</h1>
+          <p>{this.props.description}</p>
         </div>
       );
-    }
-    else return <div className="deleted"></div>
+    } else return <div className="deleted"></div>;
   }
 }
 
