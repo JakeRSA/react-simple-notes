@@ -19,6 +19,8 @@
 .titleTextArea {
   height: 2em;
   margin-bottom: 1em !important;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .descriptionTextArea {
