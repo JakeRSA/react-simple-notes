@@ -55,7 +55,7 @@ class Note extends React.Component {
       return (
         <div className="note" onClick={() => this.handleNoteClick()}>
           <h2>{dateCreated}</h2>
-          <button clasName='delete' onClick={event => {this.handleDeleteNote(event)}}>del</button>
+          <button className='delete' onClick={event => {this.handleDeleteNote(event)}}>del</button>
           <h4>{lastModified ? "last modified: " + lastModified : ""}</h4>
           <h1>{this.props.title ? this.props.title : "<no title>"}</h1>
           <p>{this.props.description}</p>
