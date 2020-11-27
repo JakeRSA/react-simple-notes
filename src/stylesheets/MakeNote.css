@@ -4,7 +4,8 @@
   width: 40%;
 }
 
-.make-note textarea {
+.make-note textarea,
+.make-note input {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -16,18 +17,19 @@
   caret-color: #00ff00;
 }
 
-.titleTextArea {
+.title-input {
   height: 2em;
   margin-bottom: 1em !important;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.descriptionTextArea {
+.description-text-area {
   height: 8rem;
 }
 
-.make-note textarea:focus {
+.make-note textarea:focus,
+.make-note input:focus {
   color: #00ff00;
   outline: 2px solid #00ff00;
 }

@@ -1,20 +1,12 @@
 import "../stylesheets/Note.css";
 import "../stylesheets/Modal.css";
 import React from "react";
-import Modal from "react-modal";
 
 class Note extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false,
-      deleted: false,
-      title: props.title,
-      description: props.description,
-      allowTitleEdit: false,
-      allowDescEdit: false,
-      date: this.formatDate(props.dateTime),
-    };
+    this.handleNoteClick = this.handleNoteClick.bind(this);
+    this.handleDeleteNote = this.handleDeleteNote.bind(this);
   }
 
   formatDate(dt) {
@@ -39,88 +31,37 @@ class Note extends React.Component {
     return dateFormatted;
   }
 
-  deleteNote() {
-    const userResponse = window.confirm(
-      "Are you sure you want to delete this note?"
-    );
-    if (userResponse) {
-      this.setState({ deleted: true });
-    }
+  handleDeleteNote(event) {
+    event.stopPropagation()
+    this.props.onDeleteNote(this.props.id);
   }
 
-  openModal() {
-    this.setState({ isOpen: true });
-  }
-
-  closeModal() {
-    this.setState({ isOpen: false });
-  }
-
-  editTitle(event) {
-    this.setState({
-      title: event.target.value,
-      date: this.formatDate(new Date()),
-    });
-  }
-  editDescription(event) {
-    this.setState({
-      description: event.target.value,
-      date: this.formatDate(new Date()),
-    });
-  }
-
-  toggleTitleEdit() {
-    this.setState({ allowTitleEdit: !this.state.allowTitleEdit });
-  }
-
-  toggleDescriptionEdit() {
-    this.setState({ allowDescEdit: !this.state.allowDescEdit });
+  handleNoteClick() {
+    const id = this.props.id;
+    const title = this.props.title;
+    const description = this.props.description;
+    const dateCreated = this.props.dateCreated;
+    this.props.onNoteClick(id, title, description, dateCreated);
   }
 
   render() {
-    if (!this.state.deleted) {
+    const dateCreated = this.formatDate(this.props.dateCreated);
+    let lastModified;
+    if (this.props.lastModified) {
+      lastModified = this.formatDate(this.props.lastModified);
+    }
+
+    if (!this.props.deleted) {
       return (
-        <div className="note-container">
-          <Modal className="note-modal" isOpen={this.state.isOpen}>
-            <button onClick={() => this.closeModal()}>esc</button>
-            <textarea
-              readOnly={!this.state.allowTitleEdit}
-              onChange={(e) => this.editTitle(e)}
-            >
-              {this.state.title || "untitled note"}
-            </textarea>
-            <button onClick={() => this.toggleTitleEdit()}>
-              {this.state.allowTitleEdit ? "done" : "edit title"}
-            </button>
-            <h2>last modified: {this.dateFormatted}</h2>
-            <div className="modal-description-box">
-              <textarea
-                readOnly={!this.state.allowDescEdit}
-                onChange={(e) => this.editDescription(e)}
-              >
-                {this.state.description}
-              </textarea>
-              <button onClick={() => this.toggleDescriptionEdit()}>
-                {this.state.allowDescEdit ? "done" : "edit description"}
-              </button>
-            </div>
-          </Modal>
-          <div className="note" onClick={() => this.openModal()}>
-            <h2>{this.state.date}</h2>
-            <button
-              onClick={() => {
-                this.deleteNote();
-              }}
-            >
-              del
-            </button>
-            <h1>{this.state.title && this.state.title}</h1>
-            <h1>{!this.state.title && "<no title>"}</h1>
-            <p>{this.state.description}</p>
-          </div>
+        <div className="note" onClick={() => this.handleNoteClick()}>
+          <h2>{dateCreated}</h2>
+          <button clasName='delete' onClick={event => {this.handleDeleteNote(event)}}>del</button>
+          <h4>{lastModified ? "last modified: " + lastModified : ""}</h4>
+          <h1>{this.props.title ? this.props.title : "<no title>"}</h1>
+          <p>{this.props.description}</p>
         </div>
       );
-    } else return <div className="deleted"></div>;
+    }
   }
 }
 

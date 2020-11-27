@@ -1,35 +1,35 @@
 import React from "react";
-import Note from "./Note";
 import "../stylesheets/MakeNote.css";
 
 class MakeNote extends React.Component {
   constructor(props) {
     super(props);
-    this.notes = [];
-    this.state = {
-      title: "",
-      description: "",
-      count: 1,
-    };
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onDescriptionChange(event) {
-    const value = event.target.value;
-    this.setState({ description: value });
+  handleTitleChange(event) {
+    this.props.onTitleChange(event.target.value);
   }
 
-  onTitleChange(event) {
-    const value = event.target.value;
-    this.setState({ title: value });
+  handleDescriptionChange(event) {
+    this.props.onDescriptionChange(event.target.value);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.onSubmit();
+    this.props.onIncrementId();
   }
 
   addNote() {
     const dateTime = new Date();
     const note = {
       dateTime: dateTime,
-      title: this.state.title,
-      description: this.state.description,
-      count: this.state.count,
+      title: this.props.title,
+      description: this.props.description,
+      id: this.props.id,
     };
     this.notes.push(note);
     this.setState({
@@ -39,45 +39,25 @@ class MakeNote extends React.Component {
   }
 
   render() {
-    const noteElems = this.notes.map((note) => (
-      <Note
-        key={note.count}
-        dateTime={note.dateTime}
-        title={note.title}
-        description={note.description}
-      />
-    ));
     return (
-      <div className="app-wrapper">
-        <form className="make-note">
-          <textarea
-            className="titleTextArea"
-            placeholder="Title (if you want but no big deal)"
-            value={this.state.title}
-            onChange={(event) => this.onTitleChange(event)}
-          ></textarea>
-          <textarea
-            className="descriptionTextArea"
-            placeholder="Enter note body here..."
-            value={this.state.description}
-            onChange={(event) => this.onDescriptionChange(event)}
-          ></textarea>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              if (this.state.description) this.addNote();
-              else {
-                window.alert(
-                  "You can't make an empty note. Why would you even want to do that?"
-                );
-              }
-            }}
-          >
-            add
-          </button>
-        </form>
-        <div className="note-container">{noteElems}</div>
-      </div>
+      <form className="make-note">
+        <input
+          className="title-input"
+          placeholder="Title (if you want but no big deal)"
+          value={this.props.title}
+          onChange={this.handleTitleChange}
+        ></input>
+        <textarea
+          required
+          className="description-text-area"
+          placeholder="Enter note body here..."
+          value={this.props.description}
+          onChange={this.handleDescriptionChange}
+        ></textarea>
+        <button type="submit" onClick={this.handleSubmit}>
+          add
+        </button>
+      </form>
     );
   }
 }

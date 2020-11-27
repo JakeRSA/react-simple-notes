@@ -12,7 +12,7 @@ html * {
   align-items: center;
 }
 
-.container * {
+* {
   color: #00ff00;
   font-family: "Source Code Pro", monospace;
 }
