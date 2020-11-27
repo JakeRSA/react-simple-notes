@@ -28,7 +28,6 @@ class App extends React.Component {
         title: "",
         description: "",
       },
-      displayEditBtns: false,
     };
   }
 
@@ -124,7 +123,6 @@ class App extends React.Component {
         dateCreated: this.state.modal.dateCreated,
         canEdit: true,
       },
-      displayEditButtons: true,
     });
   }
 
@@ -161,7 +159,6 @@ class App extends React.Component {
         title: "",
         description: "",
       },
-      displayEditButtons: false,
     });
     const origNotes = this.state.notes;
     let newNotes = [];
@@ -197,7 +194,6 @@ class App extends React.Component {
         title: this.state.modal.title,
         description: this.state.modal.description,
       },
-      displayEditButtons: false,
     });
   }
 
@@ -206,7 +202,6 @@ class App extends React.Component {
   }
 
   render() {
-    const displayEdit = this.state.displayEditBtns;
     const noteElems = this.state.notes.map((note) => (
       <Note
         key={note.id}
