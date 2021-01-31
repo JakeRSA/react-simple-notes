@@ -9,28 +9,6 @@ class Note extends React.Component {
     this.handleDeleteNote = this.handleDeleteNote.bind(this);
   }
 
-  formatDate(dt) {
-    const yyyy = dt.getFullYear();
-    let mm;
-    if (dt.getMonth() > 9) mm = dt.getMonth();
-    else mm = "0" + dt.getMonth();
-    let dd;
-    if (dt.getDate() > 9) dd = dt.getDate();
-    else dd = "0" + dt.getDate();
-    let hr;
-    if (dt.getHours() > 9) hr = dt.getHours();
-    else hr = "0" + dt.getHours();
-    let mn;
-    if (dt.getMinutes() > 9) mn = dt.getMinutes();
-    else mn = "0" + dt.getMinutes();
-    let sc;
-    if (dt.getSeconds() > 9) sc = dt.getSeconds();
-    else sc = "0" + dt.getSeconds();
-    const dateFormatted = `${yyyy}-${mm}-${dd} ${hr}:${mn}:${sc}`;
-
-    return dateFormatted;
-  }
-
   handleDeleteNote(event) {
     event.stopPropagation()
     this.props.onDeleteNote(this.props.id);
@@ -45,10 +23,10 @@ class Note extends React.Component {
   }
 
   render() {
-    const dateCreated = this.formatDate(this.props.dateCreated);
+    const dateCreated = this.props.formatDate(this.props.dateCreated);
     let lastModified;
     if (this.props.lastModified) {
-      lastModified = this.formatDate(this.props.lastModified);
+      lastModified = this.props.formatDate(this.props.lastModified);
     }
 
     if (!this.props.deleted) {

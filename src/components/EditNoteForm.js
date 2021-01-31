@@ -31,6 +31,7 @@ class EditNoteForm extends React.Component {
           onChange={(event) => {
             this.handleEditTitle(event);
           }}
+          value={this.props.title}
           disabled={!this.props.canEdit}
         ></input>
         <h2 className="date-created">date created: {this.props.dateCreated}</h2>
@@ -41,6 +42,7 @@ class EditNoteForm extends React.Component {
           onChange={(event) => {
             this.handleEditDescription(event);
           }}
+          value={this.props.description}
           disabled={!this.props.canEdit}
         ></textarea>
         <button

@@ -34,8 +34,8 @@ class App extends React.Component {
   formatDate(dt) {
     const yyyy = dt.getFullYear();
     let mm;
-    if (dt.getMonth() > 9) mm = dt.getMonth();
-    else mm = "0" + dt.getMonth();
+    if (dt.getMonth() >= 9) mm = (dt.getMonth() + 1).toString();
+    else mm = "0" + (dt.getMonth() + 1).toString();
     let dd;
     if (dt.getDate() > 9) dd = dt.getDate();
     else dd = "0" + dt.getDate();
@@ -52,6 +52,7 @@ class App extends React.Component {
 
     return dateFormatted;
   }
+
   handleTitleChange(title) {
     this.setState({ title });
   }
@@ -216,6 +217,7 @@ class App extends React.Component {
         onNoteClick={(id, title, description, dateCreated) => {
           this.handleNoteClick(id, title, description, dateCreated);
         }}
+        formatDate={this.formatDate}
       />
     ));
     return (
