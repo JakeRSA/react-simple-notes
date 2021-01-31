@@ -45,36 +45,38 @@ class EditNoteForm extends React.Component {
           value={this.props.description}
           disabled={!this.props.canEdit}
         ></textarea>
-        <button
-          className={
-            this.props.canEdit ? "allow-edit-btn hide" : "allow-edit-btn"
-          }
-          onClick={(event) => {
-            this.handleAllowEdit(event);
-          }}
-        >
-          edit note
-        </button>
-        <button
-          className={
-            this.props.canEdit ? "save-changes-btn" : "save-changes-btn hide"
-          }
-          type="submit"
-          onClick={this.props.onSubmitEdits}
-        >
-          confirm
-        </button>
-        <button
-          className={
-            this.props.canEdit
-              ? "cancel-changes-btn"
-              : "cancel-changes-btn hide"
-          }
-          type="submit"
-          onClick={this.props.onCancelEdits}
-        >
-          cancel
-        </button>
+        <span className="form-actions">
+          <button
+            className={
+              this.props.canEdit ? "allow-edit-btn hide" : "allow-edit-btn"
+            }
+            onClick={(event) => {
+              this.handleAllowEdit(event);
+            }}
+          >
+            edit note
+          </button>
+          <button
+            className={
+              this.props.canEdit ? "save-changes-btn" : "save-changes-btn hide"
+            }
+            type="submit"
+            onClick={this.props.onSubmitEdits}
+          >
+            confirm
+          </button>
+          <button
+            className={
+              this.props.canEdit
+                ? "cancel-changes-btn"
+                : "cancel-changes-btn hide"
+            }
+            type="submit"
+            onClick={this.props.onCancelEdits}
+          >
+            cancel
+          </button>
+        </span>
       </form>
     );
   }

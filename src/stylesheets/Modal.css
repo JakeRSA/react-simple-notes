@@ -1,23 +1,33 @@
 .note-modal {
+  position: absolute;
   width: 60%;
-  margin: auto;
-  padding: 10px;
   height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid green;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.note-modal:active {
+ outline: none;
 }
 
 .note-modal form {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .date-created {
   font-family: "Source Code Pro", monospace;
   font-size: 1em;
-  margin: 5px 0 5px 0;
+  margin: 10px;
   color: #00aa00;
-}
-
-.del-btn {
-  float: right;
 }
 
 .modal-title:disabled,
@@ -31,19 +41,20 @@
 }
 
 .modal-title {
+  padding: 10px;
   font-size: 2.2em;
   font-weight: 600;
 }
 
 .modal-description {
-  font-size: 1.4em;
-  display: block;
-  width: 100%;
-  max-height: 75%;
+  padding: 10px;
   resize: none;
-  margin-bottom: 10px;
 }
 
 .hide {
   display: none;
+}
+
+.form-actions {
+  margin: 10px;
 }

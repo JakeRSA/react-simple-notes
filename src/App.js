@@ -4,9 +4,7 @@ import MakeNote from "./components/MakeNote";
 import Note from "./components/Note";
 import EditNoteForm from "./components/EditNoteForm";
 import React from "react";
-import Modal from "react-modal";
-
-Modal.setAppElement("#root");
+import { Modal } from "react-bootstrap";
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +19,7 @@ class App extends React.Component {
         dateCreated: "",
         title: "",
         description: "",
-        id: undefined,
+        id: null,
         canEdit: false,
       },
       edits: {
@@ -149,7 +147,7 @@ class App extends React.Component {
     event.preventDefault();
     this.setState({
       modal: {
-        isOpen: false,
+        isOpen: true,
         id: this.state.modal.id,
         title: this.state.edits.title,
         description: this.state.edits.description,
@@ -184,7 +182,7 @@ class App extends React.Component {
     event.preventDefault();
     this.setState({
       modal: {
-        isOpen: false,
+        isOpen: true,
         id: this.state.modal.id,
         title: this.state.modal.title,
         description: this.state.modal.description,
@@ -222,36 +220,49 @@ class App extends React.Component {
     ));
     return (
       <div className="container">
-        <Modal isOpen={this.state.modal.isOpen} className="note-modal">
-          <button
-            className="del-btn"
-            onClick={() => {
-              this.closeModal();
-            }}
-          >
-            esc
-          </button>
-          <EditNoteForm
-            title={this.state.edits.title}
-            description={this.state.edits.description}
-            dateCreated={this.state.modal.dateCreated}
-            canEdit={this.state.modal.canEdit}
-            onAllowEdit={(event) => {
-              this.allowNoteEdit(event);
-            }}
-            onTitleChange={(title) => {
-              this.handleEditTitle(title);
-            }}
-            onDescriptionChange={(description) => {
-              this.handleEditDescription(description);
-            }}
-            onSubmitEdits={(event) => {
-              this.handleSubmitEdits(event);
-            }}
-            onCancelEdits={(event) => {
-              this.handleCancelEdits(event);
-            }}
-          ></EditNoteForm>
+        <Modal
+          show={this.state.modal.isOpen}
+          className="note-modal"
+          onHide={() => {
+            this.closeModal();
+          }}
+        >
+          <Modal.Header>
+            <div className="modal-header">
+
+            <button
+              className="del-btn"
+              onClick={() => {
+                this.closeModal();
+              }}
+              >
+              esc
+            </button>
+              </div>
+          </Modal.Header>
+          <Modal.Body>
+            <EditNoteForm
+              title={this.state.edits.title}
+              description={this.state.edits.description}
+              dateCreated={this.state.modal.dateCreated}
+              canEdit={this.state.modal.canEdit}
+              onAllowEdit={(event) => {
+                this.allowNoteEdit(event);
+              }}
+              onTitleChange={(title) => {
+                this.handleEditTitle(title);
+              }}
+              onDescriptionChange={(description) => {
+                this.handleEditDescription(description);
+              }}
+              onSubmitEdits={(event) => {
+                this.handleSubmitEdits(event);
+              }}
+              onCancelEdits={(event) => {
+                this.handleCancelEdits(event);
+              }}
+            ></EditNoteForm>
+          </Modal.Body>
         </Modal>
 
         <h1 className="main-header">my notes</h1>
