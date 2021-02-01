@@ -9,7 +9,7 @@ function NoteModal(props) {
       show={props.isOpen}
       className="note-modal"
       onHide={() => {
-        setCanEdit(false)
+        setCanEdit(false);
         props.onCloseModal();
       }}
     >
@@ -18,7 +18,7 @@ function NoteModal(props) {
           <button
             className="del-btn"
             onClick={() => {
-              setCanEdit(false)
+              setCanEdit(false);
               props.onCloseModal();
             }}
           >
@@ -38,7 +38,9 @@ function NoteModal(props) {
             value={props.title}
             disabled={!canEdit}
           ></input>
-          <h2 className="date-created">date created: {props.dateCreated}</h2>
+          <h2 className="date-created">
+            date created: {props.formatDate(new Date(props.dateCreated))}
+          </h2>
           <textarea
             required
             className="modal-description"

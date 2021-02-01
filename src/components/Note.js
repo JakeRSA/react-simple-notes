@@ -28,10 +28,10 @@ class Note extends React.Component {
   }
 
   render() {
-    const dateCreated = this.props.formatDate(this.props.dateCreated);
+    const dateCreated = this.props.formatDate(new Date(this.props.dateCreated));
     let lastModified;
     if (this.props.lastModified) {
-      lastModified = this.props.formatDate(this.props.lastModified);
+      lastModified = this.props.formatDate(new Date(this.props.lastModified));
     }
 
     if (!this.props.deleted) {
@@ -43,7 +43,7 @@ class Note extends React.Component {
               this.handleCloseModal();
             }}
             id={this.props.id}
-            dateCreated={this.props.formatDate(this.props.dateCreated)}
+            dateCreated={this.props.dateCreated}
             origTitle={this.props.title}
             title={this.props.editingTitle}
             onEditTitle={(title) => {
@@ -60,6 +60,7 @@ class Note extends React.Component {
             onSubmitEdits={(event, id) => {
               this.props.onSubmitEdits(event, id);
             }}
+            formatDate={this.props.formatDate}
           />
           <div className="note" onClick={() => this.handleNoteClick()}>
             <h2>{dateCreated}</h2>

@@ -2,16 +2,23 @@ import "./App.css";
 import "./stylesheets/MakeNote.css";
 import MakeNote from "./components/MakeNote";
 import Note from "./components/Note";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(
+    localStorage.getItem("jake-notes")
+      ? JSON.parse(localStorage.getItem("jake-notes"))
+      : []
+  );
   const [newId, setNewId] = useState(0);
   const [newNoteTitle, setNewNoteTitle] = useState("");
   const [newNoteDescription, setNewNoteDescription] = useState("");
   const [editingTitle, setEditingTitle] = useState("");
   const [editingDescription, setEditingDescription] = useState("");
 
+  useEffect(() => {
+    localStorage.setItem("jake-notes", JSON.stringify(notes));
+  }, [notes]);
   const formatDate = (dt) => {
     const yyyy = dt.getFullYear();
     let mm;
@@ -52,7 +59,7 @@ function App() {
     if (!description) {
       return 1;
     }
-    const dateCreated = new Date();
+    const dateCreated = new Date().getTime();
     const id = newId;
     const note = { id, title, description, dateCreated };
     setNotes([note, ...notes]);
@@ -96,7 +103,7 @@ function App() {
           title: editingTitle,
           description: editingDescription,
           dateCreated: note.dateCreated,
-          lastModified: new Date(),
+          lastModified: new Date().getTime(),
         };
         newNotes.push(editedNote);
       } else {
