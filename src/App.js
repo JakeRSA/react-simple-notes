@@ -56,7 +56,6 @@ function App() {
     const id = newId;
     const note = { id, title, description, dateCreated };
     setNotes([note, ...notes]);
-    console.log(notes);
   };
 
   const handleOpenForEdit = (title, description) => {

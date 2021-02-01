@@ -1,11 +1,15 @@
 .note-modal {
-  position: absolute;
+  position: fixed;
   width: 60%;
   height: 80%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 2px solid green;
+}
+
+.note-modal:focus {
+  outline: none;
 }
 
 .modal-header {
@@ -28,6 +32,17 @@
   font-size: 1em;
   margin: 10px;
   color: #00aa00;
+}
+
+.modal-title:focus,
+.modal-description:focus {
+  color: #00ff00;
+  outline: 2px solid #00ff00;
+}
+
+.modal-title,
+.modal-description {
+  border: 2px solid green;
 }
 
 .modal-title:disabled,

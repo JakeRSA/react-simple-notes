@@ -54,7 +54,12 @@ class MakeNote extends React.Component {
           value={this.props.description}
           onChange={this.handleDescriptionChange}
         ></textarea>
-        <button type="submit" onClick={this.handleSubmit}>
+        <button
+          type="submit"
+          onClick={(event) => {
+            if (this.props.description) this.handleSubmit(event);
+          }}
+        >
           add
         </button>
       </form>

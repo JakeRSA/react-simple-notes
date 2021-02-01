@@ -9,6 +9,7 @@ function NoteModal(props) {
       show={props.isOpen}
       className="note-modal"
       onHide={() => {
+        setCanEdit(false)
         props.onCloseModal();
       }}
     >
@@ -17,6 +18,7 @@ function NoteModal(props) {
           <button
             className="del-btn"
             onClick={() => {
+              setCanEdit(false)
               props.onCloseModal();
             }}
           >
@@ -38,6 +40,7 @@ function NoteModal(props) {
           ></input>
           <h2 className="date-created">date created: {props.dateCreated}</h2>
           <textarea
+            required
             className="modal-description"
             rows={20}
             onChange={(event) => {
@@ -60,8 +63,10 @@ function NoteModal(props) {
               className={canEdit ? "save-changes-btn" : "save-changes-btn hide"}
               type="submit"
               onClick={(event) => {
-                setCanEdit(false);
-                props.onSubmitEdits(event, props.id);
+                if (props.description) {
+                  setCanEdit(false);
+                  props.onSubmitEdits(event, props.id);
+                }
               }}
             >
               confirm
