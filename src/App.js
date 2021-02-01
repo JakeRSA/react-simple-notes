@@ -2,34 +2,17 @@ import "./App.css";
 import "./stylesheets/MakeNote.css";
 import MakeNote from "./components/MakeNote";
 import Note from "./components/Note";
-import EditNoteForm from "./components/EditNoteForm";
-import React from "react";
-import { Modal } from "react-bootstrap";
+import React, { useState } from "react";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      description: "",
-      id: 0,
-      notes: [],
-      modal: {
-        isOpen: false,
-        dateCreated: "",
-        title: "",
-        description: "",
-        id: null,
-        canEdit: false,
-      },
-      edits: {
-        title: "",
-        description: "",
-      },
-    };
-  }
+function App() {
+  const [notes, setNotes] = useState([]);
+  const [newId, setNewId] = useState(0);
+  const [newNoteTitle, setNewNoteTitle] = useState("");
+  const [newNoteDescription, setNewNoteDescription] = useState("");
+  const [editingTitle, setEditingTitle] = useState("");
+  const [editingDescription, setEditingDescription] = useState("");
 
-  formatDate(dt) {
+  const formatDate = (dt) => {
     const yyyy = dt.getFullYear();
     let mm;
     if (dt.getMonth() >= 9) mm = (dt.getMonth() + 1).toString();
@@ -49,124 +32,70 @@ class App extends React.Component {
     const dateFormatted = `${yyyy}-${mm}-${dd} ${hr}:${mn}:${sc}`;
 
     return dateFormatted;
-  }
+  };
 
-  handleTitleChange(title) {
-    this.setState({ title });
-  }
+  const handleTitleChange = (title) => {
+    setNewNoteTitle(title);
+  };
 
-  handleDescriptionChange(description) {
-    this.setState({ description });
-  }
+  const handleDescriptionChange = (description) => {
+    setNewNoteDescription(description);
+  };
 
-  handleNextId() {
-    this.setState({ id: this.state.id + 1 });
-  }
+  const handleNextId = () => {
+    setNewId(newId + 1);
+  };
 
-  handleMakeNote() {
-    const title = this.state.title;
-    const description = this.state.description;
+  const handleMakeNote = () => {
+    const title = newNoteTitle;
+    const description = newNoteDescription;
     if (!description) {
       return 1;
     }
     const dateCreated = new Date();
-    const id = this.state.id;
+    const id = newId;
     const note = { id, title, description, dateCreated };
-    this.setState({
-      notes: [note, ...this.state.notes],
-      title: "",
-      description: "",
-    });
-  }
+    setNotes([note, ...notes]);
+    console.log(notes);
+  };
 
-  handleDeleteNote(id) {
+  const handleOpenForEdit = (title, description) => {
+    setEditingTitle(title);
+    setEditingDescription(description);
+  };
+
+  const handleDeleteNote = (id) => {
     const userResponse = window.confirm(
       "Are you sure you want to delete this note?"
     );
     if (userResponse) {
       let newNotes = [];
-      for (let note of this.state.notes) {
+      for (let note of notes) {
         if (note.id !== id) {
           newNotes.push(note);
         }
       }
-      this.setState({ notes: newNotes });
+      setNotes(newNotes);
     }
-  }
+  };
 
-  handleNoteClick(id, title, description, dateCreated) {
-    this.setState({
-      modal: {
-        isOpen: true,
-        title: title,
-        description: description,
-        id: id,
-        dateCreated: this.formatDate(dateCreated),
-        canEdit: false,
-      },
-      edits: {
-        title: title,
-        description: description,
-      },
-    });
-  }
+  const handleEditTitle = (title) => {
+    setEditingTitle(title);
+  };
 
-  allowNoteEdit(event) {
+  const handleEditDescription = (description) => {
+    setEditingDescription(description);
+  };
+
+  const handleSubmitEdits = (event, id) => {
     event.preventDefault();
-    this.setState({
-      modal: {
-        isOpen: true,
-        id: this.state.modal.id,
-        title: this.state.modal.title,
-        description: this.state.modal.description,
-        dateCreated: this.state.modal.dateCreated,
-        canEdit: true,
-      },
-    });
-  }
-
-  handleEditTitle(title) {
-    this.setState({
-      edits: {
-        title: title,
-        description: this.state.edits.description,
-      },
-    });
-  }
-
-  handleEditDescription(description) {
-    this.setState({
-      edits: {
-        title: this.state.edits.title,
-        description: description,
-      },
-    });
-  }
-
-  handleSubmitEdits(event) {
-    event.preventDefault();
-    this.setState({
-      modal: {
-        isOpen: true,
-        id: this.state.modal.id,
-        title: this.state.edits.title,
-        description: this.state.edits.description,
-        dateCreated: this.state.modal.dateCreated,
-        canEdit: false,
-      },
-      edits: {
-        title: "",
-        description: "",
-      },
-    });
-    const origNotes = this.state.notes;
     let newNotes = [];
-    for (let note of origNotes) {
-      if (note.id === this.state.modal.id) {
+    for (let note of notes) {
+      if (note.id === id) {
         const editedNote = {
           id: note.id,
-          title: this.state.edits.title,
-          description: this.state.edits.description,
+          title: editingTitle,
+          description: editingDescription,
           dateCreated: note.dateCreated,
           lastModified: new Date(),
         };
@@ -175,112 +104,62 @@ class App extends React.Component {
         newNotes.push(note);
       }
     }
-    this.setState({ notes: newNotes });
-  }
+    setNotes(newNotes);
+  };
 
-  handleCancelEdits(event) {
-    event.preventDefault();
-    this.setState({
-      modal: {
-        isOpen: true,
-        id: this.state.modal.id,
-        title: this.state.modal.title,
-        description: this.state.modal.description,
-        dateCreated: this.state.modal.dateCreated,
-        canEdit: false,
-      },
-      edits: {
-        title: this.state.modal.title,
-        description: this.state.modal.description,
-      },
-    });
-  }
+  const handleCancelEdits = (title, description) => {
+    setEditingTitle(title);
+    setEditingDescription(description);
+  };
 
-  closeModal() {
-    this.setState({ modal: { isOpen: false } });
-  }
-
-  render() {
-    const noteElems = this.state.notes.map((note) => (
-      <Note
-        key={note.id}
-        id={note.id}
-        dateCreated={note.dateCreated}
-        lastModified={note.lastModified}
-        title={note.title}
-        description={note.description}
-        onDeleteNote={(id) => {
-          this.handleDeleteNote(id);
+  const noteElems = notes.map((note) => (
+    <Note
+      key={note.id}
+      id={note.id}
+      dateCreated={note.dateCreated}
+      lastModified={note.lastModified}
+      title={note.title}
+      description={note.description}
+      onOpenForEdit={(title, description) => {
+        handleOpenForEdit(title, description);
+      }}
+      editingTitle={editingTitle}
+      editingDescription={editingDescription}
+      onEditTitle={(title) => {
+        handleEditTitle(title);
+      }}
+      onEditDescription={(description) => {
+        handleEditDescription(description);
+      }}
+      onDeleteNote={(id) => {
+        handleDeleteNote(id);
+      }}
+      formatDate={formatDate}
+      onCancelEdits={(title, description) => {
+        handleCancelEdits(title, description);
+      }}
+      onSubmitEdits={(event, id) => {
+        handleSubmitEdits(event, id);
+      }}
+    />
+  ));
+  return (
+    <div className="container">
+      <h1 className="main-header">my notes</h1>
+      <MakeNote
+        title={newNoteTitle}
+        description={newNoteDescription}
+        id={newId}
+        onTitleChange={(title) => handleTitleChange(title)}
+        onDescriptionChange={(description) => {
+          handleDescriptionChange(description);
         }}
-        onNoteClick={(id, title, description, dateCreated) => {
-          this.handleNoteClick(id, title, description, dateCreated);
-        }}
-        formatDate={this.formatDate}
+        onIncrementId={() => handleNextId()}
+        onSubmit={(note) => handleMakeNote(note)}
       />
-    ));
-    return (
-      <div className="container">
-        <Modal
-          show={this.state.modal.isOpen}
-          className="note-modal"
-          onHide={() => {
-            this.closeModal();
-          }}
-        >
-          <Modal.Header>
-            <div className="modal-header">
-
-            <button
-              className="del-btn"
-              onClick={() => {
-                this.closeModal();
-              }}
-              >
-              esc
-            </button>
-              </div>
-          </Modal.Header>
-          <Modal.Body>
-            <EditNoteForm
-              title={this.state.edits.title}
-              description={this.state.edits.description}
-              dateCreated={this.state.modal.dateCreated}
-              canEdit={this.state.modal.canEdit}
-              onAllowEdit={(event) => {
-                this.allowNoteEdit(event);
-              }}
-              onTitleChange={(title) => {
-                this.handleEditTitle(title);
-              }}
-              onDescriptionChange={(description) => {
-                this.handleEditDescription(description);
-              }}
-              onSubmitEdits={(event) => {
-                this.handleSubmitEdits(event);
-              }}
-              onCancelEdits={(event) => {
-                this.handleCancelEdits(event);
-              }}
-            ></EditNoteForm>
-          </Modal.Body>
-        </Modal>
-
-        <h1 className="main-header">my notes</h1>
-        <MakeNote
-          title={this.state.title}
-          description={this.state.description}
-          id={this.state.id}
-          onTitleChange={(title) => this.handleTitleChange(title)}
-          onDescriptionChange={(description) => {
-            this.handleDescriptionChange(description);
-          }}
-          onIncrementId={() => this.handleNextId()}
-          onSubmit={(note) => this.handleMakeNote(note)}
-        />
-        <div className="note-container">{noteElems}</div>
-      </div>
-    );
-  }
+      <div className="note-container">{noteElems}</div>
+    </div>
+  );
 }
 
 export default App;
